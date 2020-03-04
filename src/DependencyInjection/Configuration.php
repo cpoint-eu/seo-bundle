@@ -32,13 +32,13 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('cmf_seo');
         if (method_exists($treeBuilder, 'getRootNode')) {
-            $root = $treeBuilder->getRootNode();
+            $nodeBuilder = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
-            $root = $treeBuilder->root('cmf_seo');
+            $nodeBuilder = $treeBuilder->root('cmf_seo');
         }
 
-        $root
+        $nodeBuilder
             ->addDefaultsIfNotSet()
             ->beforeNormalization()
                 ->ifTrue(function ($config) {
@@ -104,11 +104,12 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the persistence node to the tree.
      *
-     * @param NodeBuilder $treeBuilder
+     * @param ArrayNodeDefinition $treeBuilder
      */
-    private function addPersistenceSection(NodeBuilder $treeBuilder)
+    private function addPersistenceSection(ArrayNodeDefinition $treeBuilder)
     {
         $treeBuilder
+            ->children()
             ->arrayNode('persistence')
                 ->addDefaultsIfNotSet()
                 ->children()
@@ -136,11 +137,12 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the alternate locale node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $nodeBuilder
      */
-    private function addAlternateLocaleSection(NodeBuilder $nodeBuilder)
+    private function addAlternateLocaleSection(ArrayNodeDefinition $nodeBuilder)
     {
         $nodeBuilder
+            ->children()
             ->arrayNode('alternate_locale')
                 ->addDefaultsIfNotSet()
                 ->canBeEnabled()
@@ -154,11 +156,12 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the error node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $nodeBuilder
      */
-    private function addErrorHandlerSection(NodeBuilder $nodeBuilder)
+    private function addErrorHandlerSection(ArrayNodeDefinition $nodeBuilder)
     {
         $nodeBuilder
+            ->children()
             ->arrayNode('error')
                 ->fixXmlConfig('template')
                 ->fixXmlConfig('exclusion_rule')
@@ -191,11 +194,12 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the sitemap node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $nodeBuilder
      */
-    private function addSitemapSection(NodeBuilder $nodeBuilder)
+    private function addSitemapSection(ArrayNodeDefinition $nodeBuilder)
     {
         $nodeBuilder
+            ->children()
             ->arrayNode('sitemap')
                 ->fixXmlConfig('configuration')
                 ->addDefaultsIfNotSet()
@@ -268,11 +272,12 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the content listener node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $nodeBuilder
      */
-    private function addContentListenerSection(NodeBuilder $nodeBuilder)
+    private function addContentListenerSection(ArrayNodeDefinition $nodeBuilder)
     {
         $nodeBuilder
+            ->children()
             ->arrayNode('content_listener')
                 ->canBeDisabled()
                 ->children()
@@ -286,11 +291,12 @@ class Configuration implements ConfigurationInterface
     /**
      * Attach the form node to the tree.
      *
-     * @param NodeBuilder $nodeBuilder
+     * @param ArrayNodeDefinition $nodeBuilder
      */
-    private function addFormSection($nodeBuilder)
+    private function addFormSection(ArrayNodeDefinition $nodeBuilder)
     {
         $nodeBuilder
+            ->children()
             ->arrayNode('form')
                 ->addDefaultsIfNotSet()
                 ->fixXmlConfig('option')
