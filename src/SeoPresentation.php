@@ -21,7 +21,6 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Translation\DataCollectorTranslator;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -71,7 +70,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $extractors = [];
 
     /**
-     * @var TranslatorInterface
+     * @var DataCollectorTranslator
      */
     private $translator;
 
@@ -90,7 +89,7 @@ class SeoPresentation implements SeoPresentationInterface
      * sonata which is responsible for storing the seo data.
      *
      * @param SeoPage             $sonataPage
-     * @param TranslatorInterface $translator
+     * @param DataCollectorTranslator $translator
      * @param ConfigValues        $configValues
      * @param CacheInterface      $cache
      */
