@@ -20,7 +20,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocaleCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Translation\DataCollectorTranslator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * This presentation model prepares the data for the SeoPage service of the
@@ -70,7 +70,7 @@ class SeoPresentation implements SeoPresentationInterface
     private $extractors = [];
 
     /**
-     * @var DataCollectorTranslator
+     * @var TranslatorInterface
      */
     private $translator;
 
@@ -89,13 +89,13 @@ class SeoPresentation implements SeoPresentationInterface
      * sonata which is responsible for storing the seo data.
      *
      * @param SeoPage             $sonataPage
-     * @param DataCollectorTranslator $translator
+     * @param TranslatorInterface $translator
      * @param ConfigValues        $configValues
      * @param CacheInterface      $cache
      */
     public function __construct(
         SeoPage $sonataPage,
-        DataCollectorTranslator $translator,
+        TranslatorInterface $translator,
         ConfigValues $configValues,
         CacheInterface $cache = null
     ) {
