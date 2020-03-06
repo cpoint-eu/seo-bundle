@@ -20,6 +20,7 @@ use Symfony\Cmf\Bundle\SeoBundle\Model\AlternateLocaleCollection;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadata;
 use Symfony\Cmf\Bundle\SeoBundle\Model\SeoMetadataInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -95,7 +96,7 @@ class SeoPresentation implements SeoPresentationInterface
      */
     public function __construct(
         SeoPage $sonataPage,
-        TranslatorInterface $translator,
+        DataCollectorTranslator $translator,
         ConfigValues $configValues,
         CacheInterface $cache = null
     ) {
@@ -296,8 +297,8 @@ class SeoPresentation implements SeoPresentationInterface
     {
         $metas = $this->sonataPage->getMetas();
         $sonataKeywords = isset($metas['name']['keywords'][0])
-           ? $metas['name']['keywords'][0]
-           : '';
+            ? $metas['name']['keywords'][0]
+            : '';
 
         return ('' !== $sonataKeywords ? $sonataKeywords.', ' : '').$contentKeywords;
     }
@@ -321,7 +322,7 @@ class SeoPresentation implements SeoPresentationInterface
             ->setExtraProperties($contentSeoMetadata->getExtraProperties() ?: [])
             ->setExtraNames($contentSeoMetadata->getExtraNames() ?: [])
             ->setExtraHttp($contentSeoMetadata->getExtraHttp() ?: [])
-        ;
+            ;
     }
 
     /**
